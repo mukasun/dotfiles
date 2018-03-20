@@ -1,47 +1,3 @@
-# # Set up the prompt
-# PROMPT="[%n%m](%*%) %~ %% "
-# autoload -Uz promptinit
-# promptinit
-# prompt adam1
-#
-# setopt histignorealldups sharehistory
-#
-# # Use emacs keybindings even if our EDITOR is set to vi
-# bindkey -v
-#
-# # Keep 1000 lines of history within the shell and save it to ~/.zsh_history:
-# HISTSIZE=10000
-# SAVEHIST=10000
-# HISTFILE=~/.zsh_history
-#
-# # Use modern completion system
-# autoload -Uz compinit
-# compinit -u
-#
-# zstyle ':completion:*' auto-description 'specify: %d'
-# zstyle ':completion:*' completer _expand _complete _correct _approximate
-# zstyle ':completion:*' format 'Completing %d'
-# zstyle ':completion:*' group-name ''
-# zstyle ':completion:*' menu select=2
-# eval "$(dircolors -b)"
-# zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-# zstyle ':completion:*' list-colors ''
-# zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-# zstyle ':completion:*' matcher-list '' 'm:{a-z}={A-Z}' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=* l:|=*'
-# zstyle ':completion:*' menu select=1
-# zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-# zstyle ':completion:*' use-compctl false
-# zstyle ':completion:*' verbose true
-#
-# zstyle ':completion:*:*:kill:*:processes' list-colors '=(#b) #([0-9]#)*=0=01;31'
-# zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
-#
-# setopt auto_cd
-# setopt auto_pushd
-# setopt pushd_ignore_dups
-# setopt hist_ignore_all_dups
-# setopt hist_ignore_space
-
 # 日本語を使用
 export LANG=ja_JP.UTF-8
 
@@ -56,21 +12,25 @@ colors
 autoload -Uz compinit
 compinit
 
-# emacsキーバインド
-bindkey -v
-
 # 他のターミナルとヒストリーを共有
 setopt share_history
 
-# ヒストリーに重複を表示しない
+# ヒストリに重複を表示しない
 setopt histignorealldups
 
+# ヒストリに保存するときに余分なスペースを削除する
+setopt hist_reduce_blanks
+
+# ヒストリ設定
 HISTFILE=~/.zsh_history
-HISTSIZE=10000
-SAVEHIST=10000
+HISTSIZE=100000
+SAVEHIST=100000
 
 # cdコマンドを省略して、ディレクトリ名のみの入力で移動
 setopt auto_cd
+
+# ディレクトリ名の補完で末尾の / を自動的に付加し、次の補完に備える
+setopt auto_param_slash
 
 # 自動でpushdを実行
 setopt auto_pushd
@@ -81,55 +41,31 @@ setopt pushd_ignore_dups
 # コマンドミスを修正
 setopt correct
 
-
 # グローバルエイリアス
 alias -g L='| less'
 alias -g H='| head'
 alias -g G='| grep'
 alias -g GI='| grep -ri'
+alias la='ls -la'
+alias dc='docker compose'
 
+# コマンドラインの編集モードをViにする
+bindkey -v
 
-# エイリアス
-alias lst='ls -ltr --color=auto'
-alias l='ls -ltr --color=auto'
-alias la='ls -la --color=auto'
-alias ll='ls -l --color=auto'
-alias so='source'
-alias v='vim'
-alias vi='vim'
-alias vz='vim ~/.zshrc'
-alias c='cdr'
-# historyに日付を表示
-alias h='fc -lt '%F %T' 1'
-alias cp='cp -i'
-alias rm='rm -i'
-alias mkdir='mkdir -p'
-alias ..='c ../'
-alias back='pushd'
-alias diff='diff -U1'
+# バックスペースキーで文字を削除する
+bindkey -v '^?' backward-delete-char
 
-# backspace,deleteキーを使えるように
-stty erase ^H
-bindkey "^[[3~" delete-char
+# Shift-Tabで候補を逆順に補完する
+bindkey '^[[Z' reverse-menu-complete
 
 # cdの後にlsを実行
-chpwd() { ls -ltr --color=auto }
+chpwd() { ls -la --color=auto }
 
 # どこからでも参照できるディレクトリパス
 cdpath=(~)
 
-# 区切り文字の設定
-autoload -Uz select-word-style
-select-word-style default
-zstyle ':zle:*' word-chars "_-./;@"
-zstyle ':zle:*' word-style unspecified
-
 # Ctrl+sのロック, Ctrl+qのロック解除を無効にする
 setopt no_flow_control
-
-# プロンプトを2行で表示、時刻を表示
-PROMPT="%(?.%{${fg[green]}%}.%{${fg[red]}%})%n${reset_color}@${fg[blue]}%m${reset_color}(%*%) %~
-%# "
 
 # 補完後、メニュー選択モードになり左右キーで移動が出来る
 zstyle ':completion:*:default' menu select=2
@@ -157,28 +93,43 @@ add-zsh-hook chpwd chpwd_recent_dirs
 # cdrコマンドで履歴にないディレクトリにも移動可能に
 zstyle ":chpwd:*" recent-dirs-default true
 
-# 複数ファイルのmv 例　zmv *.txt *.txt.bk
-autoload -Uz zmv
-alias zmv='noglob zmv -W'
-
-# mkdirとcdを同時実行
-function mkcd() {
-  if [[ -d $1 ]]; then
-    echo "$1 already exists!"
-    cd $1
-  else
-    mkdir -p $1 && cd $1
-  fi
-}
-
-# git設定
-RPROMPT="%{${fg[blue]}%}[%~]%{${reset_color}%}"
+# VCSの情報を取得するzsh関数
 autoload -Uz vcs_info
+autoload -Uz colors # black red green yellow blue magenta cyan white
+colors
+
+# PROMPT変数内で変数参照
 setopt prompt_subst
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "%F{yellow}!"
-zstyle ':vcs_info:git:*' unstagedstr "%F{red}+"
-zstyle ':vcs_info:*' formats "%F{green}%c%u[%b]%f"
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
+
+zstyle ':vcs_info:git:*' check-for-changes true #formats 設定項目で %c,%u が使用可
+zstyle ':vcs_info:git:*' stagedstr "%F{green}!" #commit されていないファイルがある
+zstyle ':vcs_info:git:*' unstagedstr "%F{magenta}+" #add されていないファイルがある
+zstyle ':vcs_info:*' formats "%F{cyan}%c%u(%b)%f" #通常
+zstyle ':vcs_info:*' actionformats '[%b|%a]' #rebase 途中,merge コンフリクト等 formats 外の表示
+
+# %b ブランチ情報
+# %a アクション名(mergeなど)
+# %c changes
+# %u uncommit
+
+# プロンプト表示直前に vcs_info 呼び出し
 precmd () { vcs_info }
-RPROMPT=$RPROMPT'${vcs_info_msg_0_}'
+
+# プロンプト（左）
+PROMPT='%{$fg[red]%}[%n@%m]%{$reset_color%}'
+PROMPT=$PROMPT'${vcs_info_msg_0_} %{${fg[red]}%}%}$%{${reset_color}%} '
+
+# プロンプト（右）
+RPROMPT='%{${fg[red]}%}[%~]%{${reset_color}%}'
+
+if [ -s "/usr/local/bin/dinghy" ] ; then
+  alias dm="dinghy"
+  alias dm-start="dinghy start && eval \"\$(dinghy shellinit)\""
+  alias dm-restart="dinghy restart && eval \"\$(dinghy shellinit)\""
+  alias dm-env="eval \"\$(dinghy shellinit)\""
+else
+  alias dm="docker-machine"
+  alias dm-start="docker-machine start default && eval \"\$(docker-machine env default)\""
+  alias dm-restart="docker-machine restart default && eval \"\$(docker-machine env default)\""
+  alias dm-env="eval \"\$(docker-machine env default)\""
+fi
