@@ -3,12 +3,17 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# history setting
+###############################################################################
+# Variables                                                                   #
+###############################################################################
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
 SAVEHIST=1000000
 
-# set option
+
+###############################################################################
+# Set options                                                                 #
+###############################################################################
 setopt extended_history
 setopt share_history
 setopt hist_ignore_all_dups
@@ -22,6 +27,9 @@ setopt inc_append_history
 setopt no_flow_control
 
 
+###############################################################################
+# Functions                                                                   #
+###############################################################################
 # cdr enable
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
 add-zsh-hook chpwd chpwd_recent_dirs
@@ -55,3 +63,9 @@ zle -N peco-cdr
 zle -N peco-select-history
 bindkey '^e' peco-cdr
 bindkey '^r' peco-select-history
+
+
+###############################################################################
+# Alias                                                                       #
+###############################################################################
+alias g='cd $(ghq root)/$(ghq list | peco)'
