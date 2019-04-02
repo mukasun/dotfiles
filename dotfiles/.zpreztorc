@@ -1,5 +1,11 @@
+# Theme
 zstyle ':prezto:module:prompt' theme 'powerline'
 zstyle ':prezto:*:*' color 'yes'
+
+# Key binding
+zstyle ':prezto:module:editor' key-bindings 'vi'
+
+# Plugins
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
@@ -9,4 +15,15 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
+  'git' \
+  'autosuggestions' \
+  'syntax-highlighting' \
   'prompt'
+
+# Syntax highlight
+zstyle ':prezto:module:syntax-highlighting' highlighters \
+  'main' \
+  'brackets' \
+  'pattern' \
+  'cursor' \
+  'root'
