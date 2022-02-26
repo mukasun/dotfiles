@@ -86,9 +86,10 @@ bindkey '^r' peco-select-history
 bindkey '^s' peco-ssh
 
 eval "$(direnv hook zsh)"
-
 eval "$(anyenv init -)"
 
+## M1 brew
+export PATH="/opt/homebrew/bin:$PATH"
 
 ###############################################################################
 # Alias                                                                       #
