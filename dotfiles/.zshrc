@@ -81,15 +81,19 @@ zle -N peco-ssh
 zle -N peco-cdr
 zle -N peco-select-history
 
-bindkey '^e' peco-cdr
+bindkey -e
+bindkey '^f' peco-cdr
 bindkey '^r' peco-select-history
 bindkey '^s' peco-ssh
 
 eval "$(direnv hook zsh)"
 eval "$(anyenv init -)"
 
-## M1 brew
+# M1 brew
 export PATH="/opt/homebrew/bin:$PATH"
+
+# Flutter
+export PATH="$HOME/.pub-cache/bin:$PATH"
 
 ###############################################################################
 # Alias                                                                       #
