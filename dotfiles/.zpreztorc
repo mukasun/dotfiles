@@ -1,5 +1,5 @@
 # Theme
-zstyle ':prezto:module:prompt' theme 'powerline'
+zstyle ':prezto:module:prompt' theme 'powerlevel10k'
 zstyle ':prezto:*:*' color 'yes'
 
 # Key binding
