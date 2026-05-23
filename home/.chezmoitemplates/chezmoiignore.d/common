@@ -1,0 +1,15 @@
+com.googlecode.iterm2.plist
+plugin.jupyterlab-settings
+.key.txt.age
+
+.mise
+.uv
+.tmux.conf.d/
+.agents/README.md
+.claude/README.md
+.codex/README.md
+.config/agents
+.config/sheldon/plugin_sources
+.config/claude
+.config/codex
+.ccstatusline
