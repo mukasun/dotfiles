@@ -30,6 +30,7 @@
 #         "${HOME}/.zsh/server/zprofile"
 #         "${HOME}/.tmux.conf.d/system/server.conf"
 #         "${HOME}/.tmux.conf.d/os/ubuntu_client.conf"
+#         "${HOME}/.tmux.conf.d/os/ubuntu_server.conf"
 #     )
 #     for file in "${files_not_exists[@]}"; do
 #         echo "Checking ${file}"
