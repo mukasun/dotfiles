@@ -2,7 +2,7 @@ name: MacOS
 
 on:
   push:
-    branches: [main, feat/chezmoi]
+    branches: [main]
     paths:
       - ".github/workflows/macos.yaml"
       - "setup.sh"

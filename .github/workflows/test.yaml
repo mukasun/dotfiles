@@ -7,7 +7,7 @@ on:
   # Keep this workflow unconditional and decide inside jobs whether the full
   # test matrix is necessary for the current diff.
   push:
-    branches: [main, feat/chezmoi]
+    branches: [main]
   pull_request:
     branches: [main]
 

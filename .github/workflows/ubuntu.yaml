@@ -2,7 +2,7 @@ name: Ubuntu
 
 on:
   push:
-    branches: [main, feat/chezmoi]
+    branches: [main]
     paths:
       - ".github/workflows/ubuntu.yaml"
       - "setup.sh"
