@@ -3,7 +3,6 @@ node = "lts"
 rust = "latest"
 python = "3.11"
 
-pnpm = "latest"
 uv = "latest"
 "cargo:pueue" = "latest"
 
@@ -25,6 +24,7 @@ yq = "latest"
 
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:@openai/codex" = "latest"
+"npm:pnpm" = "latest"
 
 "github:x-motemen/ghq" = "latest"
 "github:d-kuro/gwq" = "latest"
