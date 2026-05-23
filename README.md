@@ -24,7 +24,7 @@ To set up the dotfiles run the appropriate snippet in the terminal.
 - Configuration snippet of the Apple Silicon MacOS environment for client macnine:
 
 ```console
-bash -c "$(curl -fsLS http://mukasun.me/dotfiles/setup.sh)"
+bash -c "$(curl -fsLS http://mukasun.github.io/dotfiles/setup.sh)"
 ```
 
 
@@ -33,7 +33,7 @@ bash -c "$(curl -fsLS http://mukasun.me/dotfiles/setup.sh)"
 - Configuration snippet of the Ubuntu environment for both client and server machine:
 
 ```console
-bash -c "$(wget -qO - http://mukasun.me/dotfiles/setup.sh)"
+bash -c "$(wget -qO - http://mukasun.github.io/dotfiles/setup.sh)"
 ```
 
 

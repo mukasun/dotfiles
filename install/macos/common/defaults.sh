@@ -264,7 +264,6 @@ function main() {
     defaults_ui
     defaults_dock
     defaults_finder
-    defaults_iterm2
     defaults_keyboard
     defaults_trackpad
     defaults_assistant
