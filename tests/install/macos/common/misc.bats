@@ -59,6 +59,11 @@ function setup() {
     run env CALLS_PATH="${calls_path}" CI=false bash -c '
         source "'"${SCRIPT_PATH}"'"
 
+        whoami() {
+            echo "mukasun"
+        }
+
+
         is_brew_package_installed() {
             return 1
         }
