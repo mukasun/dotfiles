@@ -50,7 +50,7 @@ jobs:
           fi
           export BRANCH_NAME
 
-          URL="https://raw.githubusercontent.com/shunk031/dotfiles/${BRANCH_NAME}/setup.sh"
+          URL="https://raw.githubusercontent.com/mukasun/dotfiles/${BRANCH_NAME}/setup.sh"
           echo "Download setup.sh from ${URL}"
 
           printf "${EMAIL_ADDRESS}\n" | bash -c "$(curl -fsLS $URL)"
@@ -60,37 +60,6 @@ jobs:
       - name: Unset gpg
         run: |
           git config --global commit.gpgsign false
-
-      - name: Run benchmark
-        run: |
-          brew install gnu-time chezmoi
-          $(chezmoi source-path)/../scripts/run_benchmark.sh > result.json
-
-      - name: Dump result.json
-        run: cat result.json
-
-      - name: Set flag for auto-push in the benchmark action
-        run: |
-          if [ "${{ github.event_name }}" = "push" ] && [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            echo "auto_push=true" >> $GITHUB_ENV
-          else
-            echo "auto_push=false" >> $GITHUB_ENV
-          fi
-
-      - name: Store benchmark result
-        uses: benchmark-action/github-action-benchmark@v1
-        with:
-          name: MacOS benchmark
-          tool: customSmallerIsBetter
-          output-file-path: result.json
-          github-token: ${{ secrets.MY_DOTFILES_BENCHMARK }}
-          gh-repository: "github.com/shunk031/my-dotfiles-benchmarks"
-          auto-push: ${{ env.auto_push }}
-          comment-on-alert: true
-          fail-on-alert: false
-          alert-threshold: "150%"
-          alert-comment-cc-users: "@shunk031"
-          benchmark-data-dir-path: "."
 
       - uses: jdx/mise-action@v4
         with:
