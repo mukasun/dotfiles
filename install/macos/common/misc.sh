@@ -35,7 +35,6 @@ readonly CASK_PACKAGES=(
     obsidian
     slack
     tableplus
-    tailscale
     rectangle
     vlc
     visual-studio-code
@@ -44,7 +43,9 @@ readonly CASK_PACKAGES=(
 )
 
 # Additional brew packages installed only for user.
-readonly ADDITIONAL_BREW_PACKAGES=()
+readonly ADDITIONAL_BREW_PACKAGES=(
+    tailscale
+)
 
 # Add applications controlled by the administrator on the work computer here
 readonly ADDITIONAL_CASK_PACKAGES=(
