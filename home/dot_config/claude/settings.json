@@ -1,7 +1,4 @@
 {
-  "model": "opusplan",
-  "alwaysThinkingEnabled": true,
-  "plansDirectory": "./.agents/worklog/claude",
   "permissions": {
     "deny": [
       "Bash(sudo:*)",
@@ -27,6 +24,7 @@
     ],
     "defaultMode": "plan"
   },
+  "model": "opusplan",
   "hooks": {
     "PreToolUse": [
       {
@@ -74,5 +72,8 @@
         "url": "https://github.com/affaan-m/everything-claude-code.git"
       }
     }
-  }
+  },
+  "alwaysThinkingEnabled": true,
+  "plansDirectory": "./.agents/worklog/claude",
+  "theme": "dark"
 }
