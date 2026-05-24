@@ -12,6 +12,7 @@ if [ "${DOTFILES_DEBUG:-}" ]; then
 fi
 
 readonly BIN_DIR="${HOME}/.local/bin"
+readonly TAG="0.7.4" # for x86_64-apple-darwin
 
 #
 # @description Download and install `sheldon` into `BIN_DIR`.
@@ -20,7 +21,7 @@ function install_sheldon() {
     mkdir -p "${BIN_DIR}"
 
     curl --proto '=https' -fLsS https://rossmacarthur.github.io/install/crate.sh |
-        bash -s -- --repo rossmacarthur/sheldon --to "${BIN_DIR}" --force
+        bash -s -- --repo rossmacarthur/sheldon --tag "${TAG}" --to "${BIN_DIR}" --force
 }
 
 #
