@@ -38,14 +38,6 @@ function run_mas_install() {
 }
 
 #
-# @description Install Bandwidth+ from the Mac App Store.
-#
-function install_bandwidth_plus() {
-    local app_id="490461369"
-    run_mas_install "${app_id}"
-}
-
-#
 # @description Install LINE from the Mac App Store.
 #
 function install_line() {
@@ -68,7 +60,6 @@ function main() {
     install_mas
 
     if ! "${CI:-false}"; then
-        install_bandwidth_plus
         install_line
         install_xcode
     fi

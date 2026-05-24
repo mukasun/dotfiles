@@ -41,7 +41,6 @@ function setup() {
 
     run cat "${calls_path}"
     [ "${status}" -eq 0 ]
-    [[ "${output}" == *"install 490461369"* ]]
     [[ "${output}" == *"install 539883307"* ]]
     [[ "${output}" == *"install 497799835"* ]]
     [[ "${output}" != *"1475387142"* ]]
