@@ -24,7 +24,6 @@ readonly BREW_TAPS=(
 )
 
 readonly CASK_PACKAGES=(
-    adobe-acrobat-reader
     cmux
     cyberduck
     google-chrome
